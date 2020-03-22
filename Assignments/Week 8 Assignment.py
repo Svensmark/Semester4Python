@@ -3,7 +3,7 @@ import bs4
 import csv
 
 
-def get_top(amount):
+def get_top(amount, filename):
     base_url = 'https://www.worldometers.info/coronavirus/'
     browser = webdriver.Firefox()
     browser.get(base_url)
@@ -34,10 +34,14 @@ def get_top(amount):
         if count == amount:
             break
 
-    with open("corona.csv", 'w', newline='') as myfile:
+    with open(filename, 'w', newline='') as myfile:
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         wr.writerow(header)
         for row in bodies:
             wr.writerow(row)
 
-get_top(6)
+
+#Example of usage
+#Gets the top 5 most infected countries
+#Saves to "corona.csv" file, overwrites the file if already exists
+get_top(5, "corona.csv")
